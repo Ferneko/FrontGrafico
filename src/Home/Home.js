@@ -3,6 +3,7 @@ import Layout from '../Layout/Layout';
 import Conexao from '../Conexao/Conexao';
 import champs from '../championFull.json'
 import { Link } from 'react-router-dom';
+import './Home.css';
 
 export default class Home extends Component {
 
@@ -96,6 +97,7 @@ export default class Home extends Component {
     render() {
         return (
             <Layout>
+                <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet"/> 
                 {this.state.erro != null ?
                     <div className="alert alert-danger alert-dismissible fade show" role="alert">
                         {this.state.erro}
@@ -104,29 +106,28 @@ export default class Home extends Component {
                     : ""}
 
                 <div className="row">
-
-
-                    <div className="col-4"></div>
-                    <div className="input-group col-md-4">
+                    <div className="col-3"></div>
+                    <div className="input-group col-md-6">
 
                         <input type="text" className="form-control" placeholder="Nome de invocador" onChange={this.setQuery} />
                         <div className="input-group-append">
-                            <button className="btn btn-outline-success" onClick={this.enviarParaBackEnd} type="button"><i className="glyphicon glyphicon-search"></i>   Buscar</button>
+                            <button className="btn btn-success" onClick={this.enviarParaBackEnd} type="button"><i className="glyphicon glyphicon-search"></i> Buscar </button>
                         </div>
                     </div>
-
                 </div>
+
                 <br />
+
                 <div className="row">
                     <div className="col-3">
 
                     </div>
                     <div className="col-6">
                         {this.state.filas.length > 0 ?
-                            <table border="5" width="100%">
+                            <table border="0" width="100%">
                                 <tbody>
                                     <tr>
-                                        <td colSpan="5"><h2>{this.state.nomeInvocador} Level : {this.state.level}</h2></td>
+                                        <td colSpan="5"><h2>{this.state.nomeInvocador} - Level : {this.state.level}</h2></td>
                                     </tr>
                                     <tr>
                                         <td rowSpan="2">
@@ -150,7 +151,7 @@ export default class Home extends Component {
                         <br />
 
                         {this.state.melhoresCampeoes.length > 0 ?
-                            <table border="5" width="100%">
+                            <table border="0" width="100%">
                                 <thead>
                                 <tr>
                                         <th colSpan="4" align="center"><h2>Melhores Campeões</h2></th>
@@ -159,9 +160,9 @@ export default class Home extends Component {
                                
                                 <tbody>
                                     {console.log(champs)}
-                                    {this.state.melhoresCampeoes.map( (item) => {
+                                    {this.state.melhoresCampeoes.map( (item, i) => {
                                         return ( 
-                                            <tr>
+                                            <tr key={i}>
                                             <td>
                                                 <Link to={"/grafico/"+this.state.accountId+"/"+item.idCampeao+"/"+this.state.nomeInvocador+"/"+this.state.icone}>
                                                 <img src={"/imagens/champion/" + champs.keys[item.idCampeao] + ".png"} width="100" height="100" alt="campeao" />

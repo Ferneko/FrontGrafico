@@ -1,0 +1,9 @@
+body {
+    background-color:#F5F5F5;
+    font-size: large;
+    font-family: 'Roboto Slab', serif;
+}
+
+table {
+    border: none !important;
+}

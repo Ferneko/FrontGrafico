@@ -91,3 +91,23 @@ body {
   
   .border-top { border-top: 1px solid #e5e5e5; }
   .border-bottom { border-bottom: 1px solid #e5e5e5; }
+
+
+  #telaInicial {
+    background-image: url("/imagens/background/league.jpg");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: 89% 91%;
+}
+
+#font {
+  font-size: x-large;
+  font-family: 'Roboto Slab', serif;
+  color: rgb(235, 235, 235);
+  text-decoration: none;
+}
+
+#font:hover {
+  color:#daa520;
+  transition-duration: 1s;
+}

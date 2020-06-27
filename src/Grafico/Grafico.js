@@ -49,7 +49,7 @@ export default class Grafico extends Component {
                 });
 
                 var dadosGraficos = [
-                    ["Data", "Ouro obtido", "Dano",]
+                    ["Data", "Ouro", "Dano",]
                 ]
                 this.state.listaPartidas.forEach(item =>
 
@@ -63,8 +63,14 @@ export default class Grafico extends Component {
                 );
 
                 var dadosGraficos2 = [
-                    ["Data", "Wards", "Abates", "Mortes", "Assistencias"]
+                    ["Data", "Wards", "Abates", "Mortes", "Assistências"]
                 ]
+
+                var options = {
+                    title: 'Teste',
+                    backgroundColor: 'transparent',
+                  };
+
                 this.state.listaPartidas.forEach(item =>
 
                     dadosGraficos2.push([
@@ -79,7 +85,7 @@ export default class Grafico extends Component {
 
 
                 this.setDadosgrafico(dadosGraficos, dadosGraficos2);
-
+                
 
             }
         }).catch(error => {
@@ -96,108 +102,114 @@ export default class Grafico extends Component {
 
     render() {
         return (<Layout>
-            {this.state.erro != null ?
-                <div className="alert alert-danger alert-dismissible fade show" role="alert">
-                    {this.state.erro}
-                    <button type="button" onClick={() => this.setState({ erro: null })} className="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <div className="textStyle">
+                <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet" />
+                {this.state.erro != null ?
+                    <div className="alert alert-danger alert-dismissible fade show" role="alert">
+                        {this.state.erro}
+                        <button type="button" onClick={() => this.setState({ erro: null })} className="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    : ""}
+                <div className="row">
+                    {/* <div className="col-1">
+                        <img src={"/imagens/profileicon/" + this.state.icone + ".png"} width="40" height="40" alt="icone de invocador" />
+                    </div>
+                    <div className="col-1" id="invocador">
+                        <h4>{this.state.nomeInvocador}</h4>
+                    </div> */}
+                    <div className="col-sm-1">
+                        <img src={"/imagens/champion/" + champs.keys[this.state.champId] + ".png"} width="40" height="40" alt="campeao" />  <h4>{champs.keys[this.state.champId]}</h4>
+                    </div>
+                    <div className="col-3">
+
+                    </div>
                 </div>
-                : ""}
-            <div className="row">
-                <div className="col-3">
-                    <img src={"/imagens/profileicon/" + this.state.icone + ".png"} width="40" height="40" alt="icone de invocador" /> <h3>{this.state.nomeInvocador}</h3>
+                <br />
+                <div className="row">
+                    <div className="col-6" id="tabela1">
+
+                        <Chart
+                            width={'100%'}
+                            height={'350px'}
+                            chartType="ColumnChart"
+                            data={this.state.dadosGrafico}
+                            options={this.state.optionsGrafico}
+                            backgroundColor="red"
+                        />
+
+
+                    </div>
+                    <div className="col-6">
+
+                        <Chart
+                            width={'100%'}
+                            height={'350px'}
+                            chartType="ColumnChart"
+                            data={this.state.dadosGrafico2}
+                            options={this.state.optionsGrafico}
+                        />
+
+
+                    </div>
                 </div>
-                <div className="col-3">
-                <img src={"/imagens/champion/" + champs.keys[this.state.champId] + ".png"} width="40" height="40" alt="campeao" /><h3>{champs.keys[this.state.champId]}</h3>
-                </div>
-                <div className="col-3">
+                <br />
+                <div className="row">
+                    <div className="col-md-12">
+                        <table width="100%" border="0">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Posição</th>
+                                    <th>Resultado</th>
+                                    <th>KDA</th>
+                                    <th>Ouro</th>
+                                    <th>Farm</th>
+                                    <th>Dano</th>
+                                    <th>Wards</th>
+                                    <th colSpan="2">Feitiço</th>
 
-                </div>
-            </div>
-            <br />
-            <div className="row">
-                <div className="col-6">
+                                    <th colSpan="6">Itens</th>
 
-                    <Chart
-                        width={'100%'}
-                        height={'350px'}
-                        chartType="ColumnChart"
-                        data={this.state.dadosGrafico}
-                        options={this.state.optionsGrafico}
-                    />
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
 
+                                    this.state.listaPartidas.map((item) => {
 
-                </div>
-                <div className="col-6">
+                                        return (
+                                            <tr>
+                                                <td>{item.dataPartida}</td>
+                                                <td>{item.lane}</td>
+                                                <td>{item.detalhes.vitoria === true ? "Vitoria" : "Derrota"}</td>
 
-                    <Chart
-                        width={'100%'}
-                        height={'350px'}
-                        chartType="ColumnChart"
-                        data={this.state.dadosGrafico2}
-                        options={this.state.optionsGrafico}
-                    />
+                                                <td>{item.detalhes.abates}/{item.detalhes.mortes}/{item.detalhes.assistencias}</td>
+                                                <td>{item.detalhes.ouroObtido}</td>
+                                                <td>{item.detalhes.totalMinionsFarmados}</td>
+                                                <td>{item.detalhes.totalDanoToChampions}</td>
+                                                <td>{item.detalhes.totalWards}</td>
+                                                <td><img src={"/imagens/item/" + item.detalhes.feitico1 + ".png"} width="40" height="40" alt="feitiço1" /></td>
+                                                <td><img src={"/imagens/item/" + item.detalhes.feitico2 + ".png"} width="40" height="40" alt="feitiço2" /></td>
+                                                <td>{Number(item.detalhes.item0) === 0 ? "" : <img src={"/imagens/item/" + item.detalhes.item0 + ".png"} width="40" height="40" alt={item.detalhes.item0} />}</td>
+                                                <td>{Number(item.detalhes.item1) === 0 ? "" : <img src={"/imagens/item/" + item.detalhes.item1 + ".png"} width="40" height="40" alt={item.detalhes.item1} />}</td>
+                                                <td>{Number(item.detalhes.item2) === 0 ? "" : <img src={"/imagens/item/" + item.detalhes.item2 + ".png"} width="40" height="40" alt={item.detalhes.item2} />}</td>
+                                                <td>{Number(item.detalhes.item3) === 0 ? "" : <img src={"/imagens/item/" + item.detalhes.item3 + ".png"} width="40" height="40" alt={item.detalhes.item3} />}</td>
+                                                <td>{Number(item.detalhes.item4) === 0 ? "" : <img src={"/imagens/item/" + item.detalhes.item4 + ".png"} width="40" height="40" alt={item.detalhes.item4} />}</td>
+                                                <td>{Number(item.detalhes.item5) === 0 ? "" : <img src={"/imagens/item/" + item.detalhes.item5 + ".png"} width="40" height="40" alt={item.detalhes.item5} />}</td>
+                                                <td>{Number(item.detalhes.item6) === 0 ? "" : <img src={"/imagens/item/" + item.detalhes.item6 + ".png"} width="40" height="40" alt={item.detalhes.item6} />}</td>
 
+                                            </tr>
+                                        )
+                                    }
 
-                </div>
-            </div>
-
-            <div className="row">
-
-                <div className="col-md-12">
-                    <table width="100%" border="2">
-                        <thead>
-                            <tr>
-                                <th>Data</th>
-                                <th>Posição</th>
-                                <th>Resultado</th>
-                                <th>KDA</th>
-                                <th>Ouro</th>
-                                <th>Farm</th>
-                                <th>Dano</th>
-                                <th>Wards</th>
-                                <th colSpan="2">Feitiço</th>
-
-                                <th colSpan="6">Itens</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-
-                                this.state.listaPartidas.map((item) => {
-
-                                    return (
-                                        <tr>
-                                            <td>{item.dataPartida}</td>
-                                            <td>{item.lane}</td>
-                                            <td>{item.detalhes.vitoria === true ? "Vitoria" : "Derrota"}</td>
-
-                                            <td>{item.detalhes.abates}/{item.detalhes.mortes}/{item.detalhes.assistencias}</td>
-                                            <td>{item.detalhes.ouroObtido}</td>
-                                            <td>{item.detalhes.totalMinionsFarmados}</td>
-                                            <td>{item.detalhes.totalDanoToChampions}</td>
-                                            <td>{item.detalhes.totalWards}</td>
-                                            <td><img src={"/imagens/item/" + item.detalhes.feitico1 + ".png"} width="40" height="40" alt="feitiço1" /></td>
-                                            <td><img src={"/imagens/item/" + item.detalhes.feitico2 + ".png"} width="40" height="40" alt="feitiço2" /></td>
-                                            <td>{Number(item.detalhes.item0) === 0 ? "" : <img src={"/imagens/item/" + item.detalhes.item0 + ".png"} width="40" height="40" alt={item.detalhes.item0} />}</td>
-                                            <td>{Number(item.detalhes.item1) === 0 ? "" : <img src={"/imagens/item/" + item.detalhes.item1 + ".png"} width="40" height="40" alt={item.detalhes.item1} />}</td>
-                                            <td>{Number(item.detalhes.item2) === 0 ? "" : <img src={"/imagens/item/" + item.detalhes.item2 + ".png"} width="40" height="40" alt={item.detalhes.item2} />}</td>
-                                            <td>{Number(item.detalhes.item3) === 0 ? "" : <img src={"/imagens/item/" + item.detalhes.item3 + ".png"} width="40" height="40" alt={item.detalhes.item3} />}</td>
-                                            <td>{Number(item.detalhes.item4) === 0 ? "" : <img src={"/imagens/item/" + item.detalhes.item4 + ".png"} width="40" height="40" alt={item.detalhes.item4} />}</td>
-                                            <td>{Number(item.detalhes.item5) === 0 ? "" : <img src={"/imagens/item/" + item.detalhes.item5 + ".png"} width="40" height="40" alt={item.detalhes.item5} />}</td>
-                                            <td>{Number(item.detalhes.item6) === 0 ? "" : <img src={"/imagens/item/" + item.detalhes.item6 + ".png"} width="40" height="40" alt={item.detalhes.item6} />}</td>
-
-                                        </tr>
                                     )
+
                                 }
-
-                                )
-
-                            }
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
 
 
+                    </div>
                 </div>
             </div>
         </Layout>);
