@@ -7,22 +7,18 @@ export default class extends Component {
 
     render() {
         return (<div>
-            <nav className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-                <div className="navbar-brand col-sm-3 col-md-2 mr-0">
-                <Link to={"/"}>
-                    Mecanics League
+           <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@800&display=swap" rel="stylesheet"/> 
+            <nav className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-5"  id="telaInicial"> 
+                <div className="col-sm-8 col-md-2 mr-0" id="title">
+                    <Link to={"/"} id="font">
+                        <b>Mecanics League</b>
                     </Link>
-                    </div>
-                <ul className="navbar-nav px-3">
-                    <li className="nav-item text-nowrap">
-                        <div className="nav-link" href="#">Sair do sistema</div>
-                    </li>
-                </ul>
+                </div>
             </nav>
             <div className="container-fluid">
                 <div className="row">
                     <main role="main" className="col-12">
-                        <br/>
+                        <br />
                         {this.props.children}
                     </main>
                 </div>
